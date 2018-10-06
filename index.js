@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-
-
-
-
-=======
 const Clarifai = require('clarifai');
 
 const app = new Clarifai.App({
@@ -184,4 +178,3 @@ const model = app.models.get('SoyBoy');
   ]
 }
 */
->>>>>>> 13d5fbd694b4c790b1ff7012a1b92830ffdb6226
