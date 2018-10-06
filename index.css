@@ -38,26 +38,15 @@ body{
     padding: 50px 30px;
 }
 
-p{
-    color: white;
-    margin-top: 10px;
-    margin-bottom: 2px;
-
-}
-
-button{
-    margin-top: 30px;
-    font-weight: bolder;
-    padding: 10px 15px;
-    color: #ffffff;
-    border:  solid rgb(78, 78, 78) 2px;
+.button{
+    padding: 10px;
     border-radius: 5px;
-    background-color: rgb(66, 66, 66);
-    text-decoration: none;
+    border: solid white 2px;
 }
 
-
-button:active{
-    background-color: rgb(112, 112, 112);
-    
+.dragndrop,
+.uploading,
+.success,
+.error {
+  display: none;
 }
