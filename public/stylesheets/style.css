@@ -6,3 +6,56 @@ body {
 a {
   color: #00B7FF;
 }
+
+*{
+
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  background: #2799D4;
+  color: #212322;
+}
+
+.title{
+  padding-top: 50px;
+  /* border: solid black 2px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container{
+  /* border: solid black 2px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.drag-container{
+  height: 60%;
+  width: 80%;
+  border-radius: 10px;
+  border: dashed black 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 50px 0px;
+  padding: 50px 30px;
+}
+
+.button{
+  padding: 10px;
+  border-radius: 5px;
+  border: solid white 2px;
+}
+
+.dragndrop,
+.uploading,
+.success,
+.error {
+display: none;
+}
