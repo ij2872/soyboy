@@ -82,9 +82,17 @@ router.get('/results:id', function(req,res){
 
   predictUserImage("./res/testFile.jpg").then((json) =>{
     let data = JSON.parse(json);
+
+    // Soybeard
+    let ret = {
+        SoybeardVal: data.outputs[0].data.concepts[0].value,
+        SoyboyVal:   data.outputs[0].data.concepts[1].value
+        // TODO: Add more values when more concepts added
+    };
+
     // outputs.data.concepts[foreach].id
     // outputs.data.concepts(foreach).value
-    console.log(data.concepts['SoyBoy'].id);
+    console.log(data.outputs[0].data.concepts[0].id);
 
     res.render('results', {
       soy: json
