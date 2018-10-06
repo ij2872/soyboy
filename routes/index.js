@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
-
+const {promisify} = require('util');
+const readFile = promisify(fs.readFile);
 
 // Clarify
 const Clarifai = require('clarifai');
@@ -13,38 +14,52 @@ const clarifaiApp = new Clarifai.App({
 // const model = clarifaiApp.models.get('SoyBoy');
 
 function predictUserImage(userImagePath) {
+  return readFile(userImagePath).then((data) => {
+    console.log("File Exists");
+    const base64Image = data.toString('base64');
+    return clarifaiApp.models.get('SoyBoy').then((mod) => {
+        return mod.predict(base64Image, false).then((res) => {
+            console.log("About to predict");
+            // console.log(res);
+            return JSON.stringify(res);
+        });
+    });
+});
+}
+
+
     // let userImage = Clarifai.ClImage(fs.open(userImagePath, 'rb'));
     var clarReturn;
-    fs.readFile(userImagePath, function(err, data) {
-      if(err){
-        console.log("File Does Not Exist");
-        return;
-      }else{
-        console.log("File Exists");
-        var base64Image = data.toString('base64');
-        // clarReturn = model.predict(base64Image, false);
-        clarifaiApp.models.get('SoyBoy').then(function(mod,err){
-          console.log("RETURNING FROM MODELTS.GET " + mod);
-          if(err) console.log("error");
+    // fs.readFile(userImagePath, function(err, data) {
+    //   if(err){
+    //     console.log("File Does Not Exist");
+    //     return;
+    //   }else{
+    //     console.log("File Exists");
+    //     var base64Image = data.toString('base64');
+    //     // clarReturn = model.predict(base64Image, false);
+    //     clarifaiApp.models.get('SoyBoy').then(function(mod,err){
+    //       console.log("RETURNING FROM MODELTS.GET " + mod);
+    //       if(err) console.log("error");
 
-          mod.predict(base64Image, false).then(function(res, err){
-            if(err) console.log("Error at predict");
-            console.log("About to predict");
-            clarReturn = JSON.stringify(res);
-            // console.log(clarReturn);
+    //       mod.predict(base64Image, false).then(function(res, err){
+    //         if(err) console.log("Error at predict");
+    //         console.log("About to predict");
+    //         clarReturn = JSON.stringify(res);
+    //         console.log(clarReturn);
             
-            return clarReturn;
-          });
+    //         return clarReturn;
+    //       });
           
-        });
+    //     });
 
-      }
-      // clarReturn = clarifaiApp.predict(model, data, false);
-    });
+    //   }
+    //   // clarReturn = clarifaiApp.predict(model, data, false);
+    // });
 
     // return clarReturn;
     // return model.predict([userImage]);
-}
+// }
 
 //------
 
@@ -62,32 +77,36 @@ router.post('/', function(req, res){
 });
 
 router.get('/results:id', function(req,res){
-  var data = predictUserImage("./res/testFile.jpg");
-  
-  // console.log(data);
-
+  // var data = predictUserImage("./res/testFile.jpg");
+  // console.log(predictUserImage("./res/testFile.jpg"));
+  var data;
   var id = req.params.id;
   var imgLocation = "./img/"
   var soyPerc = 90;
   var isSoy = (soyPerc > 80) ? true : false;
   var isBeard = false;
 
+  predictUserImage("./res/testFile.jpg").then((json) =>{
+    var jsonResults = {
+      status: false,
+      imgLocation: imgLocation,
+      id: id,
+      data: {
+        soyPercentage: soyPerc,
+        isSoy: isSoy,
+        isBeard: isBeard
+      },
+      results: json,
+      hasData: "YES"
+  
+    };
+    res.send(JSON.stringify(jsonResults));
 
-  var jsonResults = {
-    status: false,
-    imgLocation: imgLocation,
-    id: id,
-    data: {
-      soyPercentage: soyPerc,
-      isSoy: isSoy,
-      isBeard: isBeard
-    },
-    results: data,
-    hasData: "YES"
+  });
 
-  };
 
-  res.send(JSON.stringify(jsonResults));
+  // res.send("Failed in promise");
+
 });
 
 module.exports = router;
