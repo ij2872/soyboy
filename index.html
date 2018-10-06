@@ -10,28 +10,28 @@
   <script>
   try {
     var app = new Clarifai.App({
-     apiKey: myApiKey
+     apiKey: '468e1a63a329408a9d28686d14cf5efb'
     });
   }
   catch(err) {
     alert("Need a valid API Key!");
     throw "Invalid API Key";
   }
-  
+
   // Checks for valid image type
   function validFile(imageName) {
     var lowerImageName = imageName.toLowerCase();
     return lowerImageName.search(/jpg|png|bmp|tiff/gi) != -1;
   }
-  
+
   // Fills custom model dropdown
   window.onload = function() {
     var select = document.getElementById("custom_models_dropdown");
-    
+
     app.models.list().then(
       function(response) {
         var ids = response.rawData;
-        
+
         for(var i=0; i < ids.length; i++) {
           var model = ids[i];
           if(model.app_id != "main") {
@@ -48,7 +48,7 @@
     );
   }
   </script>
-  
+
   <style type="text/css">
     body { margin-left:20px; margin-top:20px; margin-bottom:30px; font-family: sans-serif; height:100%}
     ul {
@@ -75,10 +75,10 @@
       font-style: normal;
       font-size: 14px;
     }
-    
+
     .conceptBox {
-      float:left; 
-      margin-left:40px; 
+      float:left;
+      margin-left:40px;
       margin-top:15px;
       margin-bottom:30px;
       height:100%;
@@ -110,37 +110,37 @@
   </form>
   <div style="float:left">
     <button onclick="
-      if(imgurl.value == '') { 
-        alert('Please enter an image URL!'); 
+      if(imgurl.value == '') {
+        alert('Please enter an image URL!');
         return;
-      } 
-    
+      }
+
       else if (!validFile(imgurl.value)) {
         alert('Supported File Types: JPEG, PNG, TIFF, BMP');
         return;
       }
-    
+
       predict_click($('#imgurl').val(), 'url');" style="width:112px">Predict a URL!</button>
-    
+
     <input type="text" id="imgurl" placeholder="Image URL" size="80"/>
-    
+
     <br/><br/>
-    
+
     <button onclick="
-      if(filename.value == '') { 
-        alert('Please browse for a file!'); 
+      if(filename.value == '') {
+        alert('Please browse for a file!');
         return;
-      } 
-    
+      }
+
       else if (!validFile(filename.value)) {
         alert('Supported File Types: JPEG, PNG, TIFF, BMP');
         return;
       }
       predict_click($('#filename').val(), 'file');">Predict a local file!</button>
-    
+
     <input type="file" id="filename" placeholder="Filename" size="80"/>
   </div>
-  
+
   <div id="predictions">
     <div style="margin-top:30px; margin-left:20px; margin-bottom:30px; clear:left; float:left">
       <img id="img_preview1" src="" width="400"/>
@@ -150,6 +150,6 @@
     <div id="concepts" class="conceptBox">
     </div>
   </div>
-  
+
 </body>
 </html>
