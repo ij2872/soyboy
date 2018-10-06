@@ -13,10 +13,17 @@ const clarifaiApp = new Clarifai.App({
 const model = clarifaiApp.models.get('SoyBoy');
 
 function predictUserImage(userImagePath) {
-    let userImage = Clarifai.ClImage(fs.open(userImagePath, 'rb'));
+    // let userImage = Clarifai.ClImage(fs.open(userImagePath, 'rb'));
     var clarReturn;
-    fs.readFile(userImagePath, 'utf8', function(err, data) {
-      clarReturn = clarifaiApp.predict(model, data, false);
+    fs.readFile(userImagePath, function(err, data) {
+      if(err){
+        return;
+      }else{
+        var base64Image = data.toString('base64');
+        clarReturn = clarifaiApp.predict(model, base64Image, false);
+
+      }
+      // clarReturn = clarifaiApp.predict(model, data, false);
     });
 
     return clarReturn;
