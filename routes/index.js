@@ -24,9 +24,16 @@ function predictUserImage(userImagePath) {
         var base64Image = data.toString('base64');
         // clarReturn = model.predict(base64Image, false);
         clarifaiApp.models.get('SoyBoy').then(function(mod,err){
+          console.log("RETURNING FROM MODELTS.GET " + mod);
+          if(err) console.log("error");
 
           mod.predict(base64Image, false).then(function(res, err){
-            clarReturn = res;
+            if(err) console.log("Error at predict");
+            console.log("About to predict");
+            clarReturn = JSON.stringify(res);
+            // console.log(clarReturn);
+            
+            return clarReturn;
           });
           
         });
@@ -35,7 +42,7 @@ function predictUserImage(userImagePath) {
       // clarReturn = clarifaiApp.predict(model, data, false);
     });
 
-    return clarReturn;
+    // return clarReturn;
     // return model.predict([userImage]);
 }
 
@@ -55,13 +62,16 @@ router.post('/', function(req, res){
 });
 
 router.get('/results:id', function(req,res){
-  var data = predictUserImage("./res/testFile.jpg")
+  var data = predictUserImage("./res/testFile.jpg");
+  
+  // console.log(data);
+
   var id = req.params.id;
   var imgLocation = "./img/"
   var soyPerc = 90;
   var isSoy = (soyPerc > 80) ? true : false;
   var isBeard = false;
-  console.log(data);
+
 
   var jsonResults = {
     status: false,
