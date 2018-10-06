@@ -78,29 +78,26 @@ router.post('/', function(req, res){
 
 router.get('/results:id', function(req,res){
   // var data = predictUserImage("./res/testFile.jpg");
-  // console.log(predictUserImage("./res/testFile.jpg"));
-  var data;
-  var id = req.params.id;
-  var imgLocation = "./img/"
-  var soyPerc = 90;
-  var isSoy = (soyPerc > 80) ? true : false;
-  var isBeard = false;
+
 
   predictUserImage("./res/testFile.jpg").then((json) =>{
-    var jsonResults = {
-      status: false,
-      imgLocation: imgLocation,
-      id: id,
-      data: {
-        soyPercentage: soyPerc,
-        isSoy: isSoy,
-        isBeard: isBeard
-      },
-      results: json,
-      hasData: "YES"
+    // var jsonResults = {
+    //   status: false,
+    //   imgLocation: imgLocation,
+    //   id: id,
+    //   data: {
+    //     soyPercentage: soyPerc,
+    //     isSoy: isSoy,
+    //     isBeard: isBeard
+    //   },
+    //   results: json,
+    //   hasData: "YES"
   
-    };
-    res.send(JSON.stringify(jsonResults));
+    // };
+    res.render('results', {
+      soy: json
+    });
+    // res.send(JSON.stringify(jsonResults));
 
   });
 
