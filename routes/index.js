@@ -47,10 +47,10 @@ function predictUserImage(userImagePath) {
     //         console.log("About to predict");
     //         clarReturn = JSON.stringify(res);
     //         console.log(clarReturn);
-            
+
     //         return clarReturn;
     //       });
-          
+
     //     });
 
     //   }
@@ -81,22 +81,19 @@ router.get('/results:id', function(req,res){
 
 
   predictUserImage("./res/testFile.jpg").then((json) =>{
-    // var jsonResults = {
-    //   status: false,
-    //   imgLocation: imgLocation,
-    //   id: id,
-    //   data: {
-    //     soyPercentage: soyPerc,
-    //     isSoy: isSoy,
-    //     isBeard: isBeard
-    //   },
-    //   results: json,
-    //   hasData: "YES"
-  
-    // };
+    let data = JSON.parse(json);
+    // outputs.data.concepts[foreach].id
+    // outputs.data.concepts(foreach).value
+    console.log(data.concepts['SoyBoy'].id);
+
+
+
     res.render('results', {
       soy: json
     });
+
+
+
     // res.send(JSON.stringify(jsonResults));
 
   });
