@@ -10,5 +10,5 @@ const clarifaiApp = new Clarifai.App({
 
 // Have already trained the model; need to retreive it
 const model = clarifaiApp.models.get('SoyBoy');
-const userImage = ClImage(open('testFile.jpg', 'rb'));
+const userImage = ClImage(open('res/testFile.jpg', 'rb'));
 model.predict([userImage]);
