@@ -72,7 +72,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res){
-  predictUserImage("../res/testFile.jpg")
+  // predictUserImage("../res/testFile.jpg")
   res.redirect('/results');
 });
 
@@ -80,7 +80,7 @@ router.get('/results:id', function(req,res){
   // var data = predictUserImage("./res/testFile.jpg");
 
 
-  predictUserImage("./res/testFile.jpg").then((json) =>{
+  predictUserImage("./public/images/mat1.JPG").then((json) =>{
     let data = JSON.parse(json);
 
 
@@ -89,8 +89,9 @@ router.get('/results:id', function(req,res){
     console.log(data.outputs[0].data.concepts[0].id);
 
     res.render('results', {
-      SoybeardVal: data.outputs[0].data.concepts[0].value,
-      SoyboyVal:   data.outputs[0].data.concepts[1].value
+      imgLocation: "./images/mat1.JPG",
+      SoybeardVal: Math.floor(data.outputs[0].data.concepts[0].value * 100),
+      SoyboyVal:   Math.floor(100 * data.outputs[0].data.concepts[1].value)
     });
 
 
