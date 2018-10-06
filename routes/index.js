@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var fs = require('fs');
 
 
 // Clarify
@@ -13,8 +13,14 @@ const clarifaiApp = new Clarifai.App({
 const model = clarifaiApp.models.get('SoyBoy');
 
 function predictUserImage(userImagePath) {
-    let userImage = ClImage(open(userImagePath, 'rb'));
-    return model.predict([userImage]);
+    let userImage = Clarifai.ClImage(fs.open(userImagePath, 'rb'));
+    var clarReturn;
+    fs.readFile(userImagePath, 'utf8', function(err, data) {
+      clarReturn = clarifaiApp.predict(model, data, false);
+    });
+
+    return clarReturn;
+    // return model.predict([userImage]);
 }
 
 //------
@@ -28,7 +34,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res){
-  res.send('It Worked!');
+  
+  res.send(predictUserImage("../res/testFile.jpg"));
 });
 
 router.get('/results:id', function(req,res){
