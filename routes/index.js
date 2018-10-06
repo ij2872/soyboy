@@ -86,15 +86,10 @@ router.get('/results:id', function(req,res){
     // outputs.data.concepts(foreach).value
     console.log(data.concepts['SoyBoy'].id);
 
-
-
     res.render('results', {
       soy: json
     });
 
-
-
-    // res.send(JSON.stringify(jsonResults));
 
   });
 
