@@ -27,7 +27,8 @@ body{
 
 .soy-logo > img{
   margin: 0px;
-  width: 200px;
+  /* width: 200px; */
+  object-fit: cover;
   height: 200px;
 
 }
