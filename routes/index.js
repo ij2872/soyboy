@@ -3,15 +3,16 @@ var router = express.Router();
 var fs = require('fs');
 const {promisify} = require('util');
 const readFile = promisify(fs.readFile);
-
+const data1= require('../json.json');
 // Clarify
+
+
 const Clarifai = require('clarifai');
 
 const clarifaiApp = new Clarifai.App({
     apiKey: '468e1a63a329408a9d28686d14cf5efb'
 });
 
-// const model = clarifaiApp.models.get('SoyBoy');
 
 function predictUserImage(userImagePath) {
   return readFile(userImagePath).then((data) => {
@@ -22,47 +23,12 @@ function predictUserImage(userImagePath) {
             console.log("About to predict");
             // console.log(res);
             return JSON.stringify(res);
+        }).catch(function(err){
+          console.log("error on mod.predict");
         });
     });
 });
 }
-
-
-    // let userImage = Clarifai.ClImage(fs.open(userImagePath, 'rb'));
-    var clarReturn;
-    // fs.readFile(userImagePath, function(err, data) {
-    //   if(err){
-    //     console.log("File Does Not Exist");
-    //     return;
-    //   }else{
-    //     console.log("File Exists");
-    //     var base64Image = data.toString('base64');
-    //     // clarReturn = model.predict(base64Image, false);
-    //     clarifaiApp.models.get('SoyBoy').then(function(mod,err){
-    //       console.log("RETURNING FROM MODELTS.GET " + mod);
-    //       if(err) console.log("error");
-
-    //       mod.predict(base64Image, false).then(function(res, err){
-    //         if(err) console.log("Error at predict");
-    //         console.log("About to predict");
-    //         clarReturn = JSON.stringify(res);
-    //         console.log(clarReturn);
-
-    //         return clarReturn;
-    //       });
-
-    //     });
-
-    //   }
-    //   // clarReturn = clarifaiApp.predict(model, data, false);
-    // });
-
-    // return clarReturn;
-    // return model.predict([userImage]);
-// }
-
-//------
-
 
 
 
@@ -71,29 +37,47 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+// SAVE
 router.post('/', function(req, res){
-  // predictUserImage("../res/testFile.jpg")
-  res.redirect('/results');
+  let image64 = req.body.img64;
+  console.log(image64);
+  filePath = '/public/images';
+  request.on('data', function(data){
+    body += data;
+  });
+
+  res.redirect('/results:' + number);
 });
 
 router.get('/results:id', function(req,res){
-  // var data = predictUserImage("./res/testFile.jpg");
 
 
-  predictUserImage("./public/images/mat1.JPG").then((json) =>{
-    let data = JSON.parse(json);
+  // let data = JSON.parse(JSON.stringify(data1));
+  // res.render('results', {
+  //   imgLocation: "./images/mat1.JPG",
+  //   SoybeardVal: (100 * data.outputs[0].data.concepts[0].value),
+  //   SoyboyVal:   (100 * data.outputs[0].data.concepts[1].value)
+  // });
 
+  
+  let imagePath = "./public/images/testFile.jpg";
+  predictUserImage(imagePath).then((json) =>{
+    // let data = JSON.parse(json);
 
+    console.log(json);
     // outputs.data.concepts[foreach].id
     // outputs.data.concepts(foreach).value
-    console.log(data.outputs[0].data.concepts[0].id);
+    // console.log(data.outputs[0].data.concepts[0].id);
+    // console.log(data);
+    
 
-    res.render('results', {
-      imgLocation: "./images/mat1.JPG",
-      SoybeardVal: Math.floor(data.outputs[0].data.concepts[0].value * 100),
-      SoyboyVal:   Math.floor(100 * data.outputs[0].data.concepts[1].value)
-    });
 
+    // res.render('results', {
+    //   imgLocation: "."+imagePath.substring(8),
+    //   SoybeardVal: "data",//Math.floor(100 * data.outputs[0].data.concepts[0].value),
+    //   SoyboyVal:   "data2"//Math.floor(100 * data.outputs[0].data.concepts[0].value)
+    // });
+    res.render('results')
 
   });
 

@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 0px 50px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -14,8 +14,22 @@ a {
 }
 
 body{
-  background: #2799D4;
+  background: white;
   color: #212322;
+}
+
+.main-img{
+  margin: 15px 0px;
+  
+  border: solid black 5px;
+  border-radius: 5px; 
+}
+
+.soy-logo > img{
+  margin: 0px;
+  width: 200px;
+  height: 200px;
+
 }
 
 .title{

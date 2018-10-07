@@ -1,18 +1,21 @@
 extends layout
 
 block content
-    h1 stuff
     
-    
-    br
-    p SoyBoy
-    p #{SoyboyVal}%
-    br
-    p SoyBoy Beard
-    p #{SoybeardVal}%
+    .container
+        .soy-logo 
+            img(src="./images/Soylent.svg")
 
-    br
-    img(src="./images/mat1.JPG" style="width: 600px; height: 500px;")
+        
+        br
+        h2 SoyBoy
+        p #{SoyboyVal}%
+        br
+        h2 SoyBoy Beard
+        p #{SoybeardVal}%
+
+        br
+        img(class="main-img" src=imgLocation style="width: 600px; height: 500px;")
 
 
  
