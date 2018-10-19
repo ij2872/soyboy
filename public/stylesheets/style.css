@@ -65,7 +65,8 @@ body{
 .button{
   padding: 10px;
   border-radius: 5px;
-  border: solid white 2px;
+  margin: 20px;
+  border: solid whitesmoke 2px;
 }
 
 .dragndrop,

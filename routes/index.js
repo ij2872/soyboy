@@ -43,6 +43,7 @@ function predictUserImage(userImagePath){
     });
   });
 }
+
 function predictUserImageBeard(userImagePath){
   return readFile(userImagePath).then((data) => {
     const base64Image = data.toString('base64');
@@ -77,22 +78,8 @@ router.post('/profile', upload.single('files'), function (req, res, next) {
 })
 
 
-// SAVE
-// router.post('/', function(req, res){
-//   console.log("trust the proc");
-//   console.log(req.body.img64);
-
-//   writeFile("./public/images/tmp1.jpeg", req.body.img64, function(err){
-//     if(err){
-//       return console.log("error with writing file");
-//     }
-//     console.log("File Saved");
-//   });
 
 
-//   // res.send(req.body.img64);
-//   // res.redirect('/results:' + 3);
-// });
 
 router.get('/results:id', function(req,res){
   let path = req.params.id;
@@ -104,8 +91,6 @@ router.get('/results:id', function(req,res){
     let data = (json) ? JSON.parse(json): {empty: "2"};
     let data_beard = (json2) ? JSON.parse(json2) : {empty: "3"};
  
-    
-  
 
     res.render('results', {
       imgLocation: imagePath.substr(8),
